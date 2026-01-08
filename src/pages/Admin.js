@@ -1,4 +1,5 @@
 import { dataService } from '../services/dataService';
+import version from '../version.json';
 
 export function Admin() {
   const categories = dataService.getCategories();
@@ -103,6 +104,11 @@ export function Admin() {
           </div>
         `).join('')}
       </div>
+    </div>
+
+    <div style="margin-top: 3rem; text-align: center; padding-bottom: 2rem; opacity: 0.5; font-size: 0.75rem;">
+      <p>${version.name} v${version.version}</p>
+      <p>Last Updated: ${version.buildDate}</p>
     </div>
   `;
 
