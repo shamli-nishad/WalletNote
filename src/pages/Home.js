@@ -1,4 +1,5 @@
 import { dataService } from '../services/dataService';
+import { openTransactionModal } from '../components/TransactionModal';
 
 export function Home({ navigate }) {
   const summaries = dataService.getSummaries();
@@ -61,15 +62,22 @@ export function Home({ navigate }) {
   }).join('')}
     </div>
 
-    <div style="margin-top: 1.25rem;">
-      <button class="btn btn-primary" id="home-add-btn" style="padding: 0.875rem; font-size: 0.9375rem;">
-        <i>➕</i> Add Transaction
+    <div style="margin-top: 1.25rem; display: flex; gap: 1rem;">
+      <button class="btn btn-secondary" id="home-add-expense-btn" style="padding: 0.875rem; font-size: 0.9375rem; color: var(--danger); border-color: var(--danger);">
+        <i>➖</i> Add Expense
+      </button>
+      <button class="btn btn-primary" id="home-add-income-btn" style="padding: 0.875rem; font-size: 0.9375rem; background: var(--success);">
+        <i>➕</i> Add Income
       </button>
     </div>
   `;
 
-  container.querySelector('#home-add-btn').addEventListener('click', () => {
-    navigate('transactions');
+  container.querySelector('#home-add-expense-btn').addEventListener('click', () => {
+    openTransactionModal(null, null, 'expense');
+  });
+
+  container.querySelector('#home-add-income-btn').addEventListener('click', () => {
+    openTransactionModal(null, null, 'income');
   });
 
   return container;

@@ -17,8 +17,11 @@ const DEFAULT_CATEGORIES = [
   { id: 'cat_5', name: 'Health', type: 'expense', icon: '💊' },
   { id: 'cat_6', name: 'Utilities', type: 'expense', icon: '💡' },
   { id: 'cat_7', name: 'Salary', type: 'income', icon: '💰' },
-  { id: 'cat_8', name: 'Gifts', type: 'income', icon: '🎁' },
-  { id: 'cat_9', name: 'Other', type: 'expense', icon: '📦' }
+  { id: 'cat_8', name: 'Other', type: 'income', icon: '🎁' },
+  { id: 'cat_9', name: 'Other', type: 'expense', icon: '📦' },
+  { id: 'cat_10', name: 'Home', type: 'expense', icon: '🏠' },
+  { id: 'cat_11', name: 'Childcare', type: 'expense', icon: '🧸' },
+  { id: 'cat_12', name: 'Donations', type: 'expense', icon: '🤝' }
 ];
 
 const INITIAL_DATA = {
@@ -41,7 +44,16 @@ class DataService {
     try {
       const parsed = JSON.parse(saved);
       // Ensure categories exist if they were added later
-      if (!parsed.categories) parsed.categories = DEFAULT_CATEGORIES;
+      if (!parsed.categories) {
+        parsed.categories = DEFAULT_CATEGORIES;
+      } else {
+        // Merge missing default categories
+        DEFAULT_CATEGORIES.forEach(defaultCat => {
+          if (!parsed.categories.some(c => c.id === defaultCat.id)) {
+            parsed.categories.push(defaultCat);
+          }
+        });
+      }
       return parsed;
     } catch (e) {
       console.error('Failed to parse data', e);
